@@ -1,10 +1,10 @@
 {
   "name": "tweetium",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./server/index.js",
   "repository": "https://github.com/dresean/tweetium.git",
   "license": "MIT",
-  "start": "node server",
+  "start": "node index.js",
   "engines": {
     "node": "11.8.0"
   }
