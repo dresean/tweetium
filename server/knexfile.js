@@ -34,6 +34,7 @@ module.exports = {
     seeds: {
       directory: './seeds/production'
     },
+    ssl: true,
     useNullAsDefault: true
   }
 
