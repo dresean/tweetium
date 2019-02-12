@@ -6,12 +6,10 @@ module.exports = {
 
   development: {
     client: 'pg',
-    // connection: process.env.DATABASE_URL,
     connection: {
-      host: '127.0.0.1',
       database: process.env.DATABASE_NAME,
       user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_ACCESS_KEY,
+      password: process.env.PASSWORD,
     },
     migrations: {
       tableName: 'knex_migrations',
@@ -28,7 +26,7 @@ module.exports = {
     connection: {
       database: process.env.DATABASE_NAME,
       user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_ACCESS_KEY,
+      password: process.env.DATABASE_PASSWORD,
     },
     pool: {
       min: 2,
