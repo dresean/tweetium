@@ -26,25 +26,25 @@ server.use(compression())
 //     res.status(200).json({Message: 'server up and running!'})
 // })
 
-server.get('/api', (req, res) => {
-    res.status(200).json({Message: 'paths working fine!'})
-})
+// server.get('/api', (req, res) => {
+//     res.status(200).json({Message: 'paths working fine!'})
+// })
 
-server.get('/users', (req, res) => {
-    return getUsersController()
-    .then(users => {
-        console.log('Users fetched! \n', users)
-        res.status(200).json(users)
-    })
-    .catch(err => {
-        console.log('Users not found! \n', err)
-        res.status(404).json(err)
-    })
-})
+// server.get('/users', (req, res) => {
+//     return getUsersController()
+//     .then(users => {
+//         console.log('Users fetched! \n', users)
+//         res.status(200).json(users)
+//     })
+//     .catch(err => {
+//         console.log('Users not found! \n', err)
+//         res.status(404).json(err)
+//     })
+// })
 
-// server.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname + '/ui/build/index.html'));
-// });
+server.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/ui/build/index.html'));
+});
 
 server.listen(port, () => {
     console.log(`server listening to ${port} \n\n\n`)

@@ -15,8 +15,8 @@ class App extends Component {
   componentDidMount() {
     axios.get('https://tweetium.herokuapp.com/users')
     .then(res => {
-      const users = res.data
-      this.setState({users})
+      const { users } = res.data
+      this.setState(users)
     })
     .catch(err => {
       console.log('err')
