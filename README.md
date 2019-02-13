@@ -1,4 +1,6 @@
 # tweetium
 
 
-# server live at https://tweetium.herokuapp.com
+# watch development live at https://tweetium.herokuapp.com
+
+##status: server deployed 
