@@ -19,13 +19,14 @@ server.use(compression())
 //     res.status(200).json({Message: 'server up and running!'})
 // })
 
-// server.get('/api', (req, res) => {
-//     res.status(200).json({Message: 'paths working fine!'})
-// })
+server.get('/api', (req, res) => {
+    res.status(200).json({Message: 'paths working fine!'})
+})
 
-server.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname+'/ui/build/index.html'));
+server.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/ui/build/index.html'));
 });
+
 server.listen(port, () => {
     console.log(`server listening to ${port} \n\n\n`)
 })
