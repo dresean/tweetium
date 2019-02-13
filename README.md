@@ -1,4 +1,3 @@
 # tweetium
 
-#updates:
-## - server live at https://tweetium.herokuapp.com
+# server live at https://tweetium.herokuapp.com
