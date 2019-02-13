@@ -29,10 +29,10 @@ module.exports = {
       max: 10
     },
     migrations: {
-      directory: './migrations'
+      directory: __dirname + './migrations'
     },
     seeds: {
-      directory: './seeds/production'
+      directory: __dirname + './seeds/production'
     },
     ssl: true,
     useNullAsDefault: true
