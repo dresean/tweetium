@@ -5,7 +5,6 @@
   "repository": "https://github.com/dresean/tweetium.git",
   "license": "MIT",
   "start": {
-    "heroku-postbuild": "cd ui && yarn && yarn run build",
     "start": "yarn start"
   },
   "engines": {
