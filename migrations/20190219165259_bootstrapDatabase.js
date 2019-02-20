@@ -55,6 +55,7 @@ exports.up = function(knex, Promise) {
                 tbl.increments('messageId').unsigned().notNullable().primary()
                 tbl.integer('sent_by_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('recipient_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.text('body').notNullable().defaultTo('Lets Chat!')
                 tbl.binary('image1')
                 tbl.binary('image2')
                 tbl.binary('image3')
