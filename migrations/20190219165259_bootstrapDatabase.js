@@ -26,12 +26,13 @@ exports.up = function(knex, Promise) {
             knex.schema.createTable('Like', (tbl) => {
                 tbl.increments('likeId').unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
-                tbl.integer('post_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('reply', (tbl) => {
                 tbl.increments('replyId').unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.string('body', 280).notNullable()
                 tbl.binary('image1').defaultTo('')
                 tbl.binary('image3').defaultTo('')
