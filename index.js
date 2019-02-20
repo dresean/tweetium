@@ -3,19 +3,20 @@ const cors = require('cors')
 const compression = require('compression')
 const morgan = require('morgan')
 const port = process.env.PORT || 5000
+const path = require('path')
+const db = require('./db')
+const helmet = require('helmet')
 require('dotenv').config()
 
 const Router = express.Router()
 const server = express()
-const path = require('path')
-const db = require('./db')
 
 const getUsersController = () => {
     let query = db('User')
     return query.select('*')
 }
 
-
+server.use(helmet())
 server.use(cors())
 server.use(express.json())
 server.use(express.static(path.join(__dirname, 'ui/build')));

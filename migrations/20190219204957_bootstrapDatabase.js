@@ -14,33 +14,36 @@ exports.up = function(knex, Promise) {
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('Tweet', (tbl) => {
-                tbl.increments('tweetId').unsigned().primary()
+                tbl.increments('tweetId').notNullable().unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.string('body', 280).notNullable()
-                tbl.binary('image1').defaultTo('')
-                tbl.binary('image3').defaultTo('')
-                tbl.binary('image4').defaultTo('')
+                tbl.binary('image1')
+                tbl.binary('image2')
+                tbl.binary('image3')
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('Like', (tbl) => {
-                tbl.increments('likeId').unsigned().primary()
+                tbl.increments('likeId').notNullable().unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
-                tbl.integer('post_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('reply', (tbl) => {
-                tbl.increments('replyId').unsigned().primary()
+                tbl.increments('replyId').notNullable().unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')                
                 tbl.string('body', 280).notNullable()
-                tbl.binary('image1').defaultTo('')
-                tbl.binary('image3').defaultTo('')
-                tbl.binary('image4').defaultTo('')
+                
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('retweet', (tbl) => {
-                tbl.increments('retweetId').unsigned().primary()
+                tbl.increments('retweetId').notNullable().unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
-                tbl.string('body', 280).notNullable()
+                tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')                
+                tbl.string('body', 280).notNullable().defaultTo('')
+                tbl.binary('image1')
+                tbl.binary('image2')
+                tbl.binary('image3')
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('Follower', (tbl) => {
@@ -48,16 +51,13 @@ exports.up = function(knex, Promise) {
                 tbl.integer('follower_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.timestamps(true, true)
             }),
-            knex.schema.createTable('Media', (tbl) => {
-                tbl.increments('mediaId').unsigned().notNullable()
-                tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
-                tbl.binary('image')
-                tbl.timestamps(true, true)
-            }),
             knex.schema.createTable('Message', (tbl) => {
                 tbl.increments('messageId').unsigned().notNullable().primary()
                 tbl.integer('sent_by_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('recipient_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.binary('image1')
+                tbl.binary('image2')
+                tbl.binary('image3')
                 tbl.timestamps(true, true)
             })
     ])
@@ -72,7 +72,6 @@ exports.up = function(knex, Promise) {
 exports.down = function(knex, Promise) {
     return Promise.all([
         knex.schema.dropTableIfExists('Message'),
-        knex.schema.dropTableIfExists('Media'),
         knex.schema.dropTableIfExists('Follower'),
         knex.schema.dropTableIfExists('Retweet'),
         knex.schema.dropTableIfExists('Reply'),
