@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
                 tbl.string('name', 50).defaultTo('')
                 tbl.string('username', 25).notNullable().unique()
                 tbl.string('email', 50).unique().comment('might have permission from oauth2 or not, so not required')
-                tbl.text('bio').defaultTo('')
+                tbl.string('bio', 160).defaultTo('')
                 tbl.specificType('followers', 'INT[]')
                 tbl.specificType('following', 'INT[]')
                 tbl.string('tagline', 40).defaultTo('')
