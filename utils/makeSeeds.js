@@ -1,11 +1,11 @@
-const faker = (number) => require('faker');
+const faker = require('faker');
 
 
 const fakeUser = (number) => {
     return {
         userId: number,
         name: faker.name.firstName(),
-        username: faker.internet.username(),
+        username: faker.internet.userName(),
         email: faker.internet.email(),
         bio: faker.lorem.sentence(),
         tagline: faker.lorem.words(),
@@ -67,9 +67,9 @@ const fakeMessage = (number) => {
 module.exports = {
     fakeUser,
     fakeTweet,
+    fakeLike,
+    fakeReply,
     fakeRetweet,
     fakeFollow,
     fakeMessage,
-    fakeReply,
-    fakeLike
 }
