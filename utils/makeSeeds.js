@@ -1,6 +1,17 @@
 const faker = require('faker');
 
 
+
+const maxLength = 280
+
+let str = faker.lorem.paragraph()
+    if (str.length > maxLength) {
+        str = str.slice(0, maxLength - 1)
+    }
+
+
+    // generate fake data, each function simply returns an object 
+
 const fakeUser = (number) => {
     return {
         userId: number,
@@ -18,7 +29,7 @@ const fakeTweet = (number) => {
     return {
         tweetId: number,
         user_id: number,
-        body: faker.lorem.paragraph(),
+        body: str
     }
 }
 
@@ -35,7 +46,7 @@ const fakeReply = (number) => {
         replyId: number,
         user_id: number,
         tweet_id: number,
-        body: faker.lorem.paragraph()
+        body: str
     }
 }
 
@@ -44,7 +55,7 @@ const fakeRetweet = (number) => {
         retweetId: number,
         user_id: number,
         tweet_id: number,
-        body: faker.lorem.paragraph()
+        body: str
     }
 }
 
@@ -64,6 +75,16 @@ const fakeMessage = (number) => {
     }
 }
 
+// generate the fake data above within a loop
+const multiply = (cb) => {
+    const arr = []
+    for(let i = 0; i <= 35; i++) {
+        arr.push(cb(i))
+    }
+    return arr
+}
+
+
 module.exports = {
     fakeUser,
     fakeTweet,
@@ -72,4 +93,5 @@ module.exports = {
     fakeRetweet,
     fakeFollow,
     fakeMessage,
+    multiply,
 }

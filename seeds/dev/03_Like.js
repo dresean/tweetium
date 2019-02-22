@@ -1,12 +1,11 @@
-const { fakeUser, multiply } = require('../../utils/makeSeeds')
-
+const { multiply, fakeLike } = require('../../utils/makeSeeds')
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('User').del()
+  return knex('Like').del()
     .then(function () {
       // Inserts seed entries
-      return knex('User').insert(multiply(fakeUser))
+      return knex('Like').insert(multiply(fakeLike));
     })
     .catch(err => console.log(err.message))
 };
