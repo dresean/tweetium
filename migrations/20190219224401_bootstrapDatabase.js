@@ -40,7 +40,8 @@ exports.up = function(knex, Promise) {
             knex.schema.createTable('Retweet', (tbl) => {
                 tbl.increments('retweetId').notNullable().unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
-                tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')                
+                tbl.integer('tweet_id').references('Tweet.tweetId').onDelete('CASCADE').onUpdate('CASCADE')                
+                tbl.integer('reply_id').references('Reply.replyId').onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.string('body', 280).notNullable().defaultTo('')
                 tbl.binary('image1')
                 tbl.binary('image2')
