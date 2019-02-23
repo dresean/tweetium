@@ -1,14 +1,15 @@
 const faker = require('faker');
 
+// limits string lenght output from faker
 
-
+const makeString = () => {
 const maxLength = 280
-
 let str = faker.lorem.paragraph()
     if (str.length > maxLength) {
         str = str.slice(0, maxLength - 1)
     }
-
+    return str
+}
 
     // generate fake data, each function simply returns an object 
 
@@ -29,7 +30,7 @@ const fakeTweet = (number) => {
     return {
         tweetId: number,
         user_id: number,
-        body: str
+        body: makeString()
     }
 }
 
@@ -46,7 +47,16 @@ const fakeReply = (number) => {
         replyId: number,
         user_id: number,
         tweet_id: number,
-        body: str
+        body: makeString()
+    }
+}
+
+const fakeReplyRetweet = (number) => {
+    return {
+        retweetId: number,
+        user_id: number,
+        reply_id: number,
+        body: makeString()
     }
 }
 
@@ -55,7 +65,7 @@ const fakeRetweet = (number) => {
         retweetId: number,
         user_id: number,
         tweet_id: number,
-        body: str
+        body: makeString()
     }
 }
 
@@ -75,15 +85,30 @@ const fakeMessage = (number) => {
     }
 }
 
-// generate the fake data above within a loop
-const multiply = (cb) => {
+// makes an array of data
+// if one param passed, loop 35 times
+// if two params passed, loop x times
+// if three params passed, start loop at x, and loop y times
+
+const multiply = (cb, ...rest) => {
+    let i
+    let condition
     const arr = []
-    for(let i = 0; i <= 35; i++) {
+    if(rest.length === 2){
+        i = rest[0]
+        condition = rest[0] + rest[1]
+    } else if(rest.length === 1 && rest[0] > 0) {
+        i = 0
+        condition = rest[0]
+    } else {
+        i = 0
+        condition = 35
+    }
+    for(i; i <= condition; i++) {
         arr.push(cb(i))
     }
     return arr
 }
-
 
 module.exports = {
     fakeUser,
@@ -94,4 +119,5 @@ module.exports = {
     fakeFollow,
     fakeMessage,
     multiply,
+    fakeReplyRetweet,
 }
