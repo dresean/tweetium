@@ -85,31 +85,6 @@ const fakeMessage = (number) => {
     }
 }
 
-// makes an array of data
-// if one param passed, loop 35 times
-// if two params passed, loop x times
-// if three params passed, start loop at x, and loop y times
-
-// const multiply = (cb, ...rest) => {
-//     let i
-//     let condition
-//     const arr = []
-//     if(rest.length === 2){
-//         i = rest[0]
-//         condition = rest[0] + rest[1]
-//     } else if(rest.length === 1 && rest[0] > 0) {
-//         i = 0
-//         condition = rest[0]
-//     } else {
-//         i = 0
-//         condition = 35
-//     }
-//     for(i; i <= condition; i++) {
-//         arr.push(cb(i))
-//     }
-//     return arr
-// }
-
 const multiply = (cb, ...rest) => {
     let i
     let condition
