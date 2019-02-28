@@ -1,5 +1,5 @@
 const express = require('express')
-const { getUser, verifyPassword } = require('../../controllers/auth/signInController');
+const { getUser, verifyPassword } = require('../../controllers/auth/signinController');
 const db = require('../../db');
 const { status } = require('../../utils/statusCodes')
 

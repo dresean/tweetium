@@ -22,7 +22,8 @@ const fakeUser = (number) => {
         bio: faker.lorem.sentence(),
         tagline: faker.lorem.words(),
         private: faker.random.boolean(),
-        emailVerified: faker.random.boolean()
+        emailVerified: faker.random.boolean(),
+        password: faker.internet.password()
     }
 }
 
