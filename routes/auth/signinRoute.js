@@ -14,7 +14,7 @@ Router
     return getUser(email)
     .then(user => {
       if (verifyPassword(password)) {
-        /* login and redirect to home *//
+        /* login and redirect to home */
       }
     })
 })
