@@ -22,7 +22,8 @@ const fakeUser = (number) => {
         bio: faker.lorem.sentence(),
         tagline: faker.lorem.words(),
         private: faker.random.boolean(),
-        emailVerified: faker.random.boolean()
+        emailVerified: faker.random.boolean(),
+        password: faker.internet.password()
     }
 }
 
@@ -85,9 +86,10 @@ const fakeMessage = (number) => {
     }
 }
 
-// allows optional arguements
-// one for loop length
-// two for loop start and end
+// accepts a function above
+// if only a function passed, multiply 35 times
+// if 2 arguments passed, multiply x times
+// if 3 arguements passed 
 
 const multiply = (cb, ...rest) => {
     let i

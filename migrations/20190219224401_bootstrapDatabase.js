@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
                 tbl.increments('userId').unsigned().notNullable().primary()
                 tbl.string('name', 50).defaultTo('')
                 tbl.string('username', 25).notNullable().unique()
+                tbl.text('password').notNullable()
                 tbl.binary('uploadedAvatar').defaultTo('')
                 tbl.text('defaultAvatar').defaultTo('https://res.cloudinary.com/culterre-llc/image/upload/v1550785903/default_ffmgtg.jpg')
                 tbl.string('email', 50).unique().comment('might have permission from oauth2 or not, so not required')
