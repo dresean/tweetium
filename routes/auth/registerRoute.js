@@ -1,26 +1,28 @@
 const express = require('express')
 const Router = express.Router()
 const { success, serverError, clientError, redirection } = require('../../utils/statusCodes')
-const { findEmail, findUsername, createToken, createUser, hashPassword } = require('../../controllers/auth/signupController')
+const { createUser, hashPassword } = require('../../controllers/auth/registerController')
+const { findEmail, findUsername, createToken } = require('../../controllers/User')
 
+// checks if a user exists in the database by email and username, if not, creates a new user
 
 Router
-.post('/signup', (req, res) => {
+.post('/register', (req, res) => {
     let { email, username, password } = req.body
     if(!email || !username || !password){
-       return res
+        res
         .status(clientError.badRequest)
         .json({Message: "Please fill all fields to continue"})
     } 
     return findEmail(email)
-    .then( response => {
+    .then(response => {
         if(response.length > 0) {
             res.status(clientError.unauthorized)
             .json({Message: "That email is taken!", response})
         }
         return findUsername(username)
     })
-    .then( response => {
+    .then(response => {
         if(response.length > 0) {
             console.log(response.length)
             res.status(clientError.unauthorized)
@@ -28,16 +30,16 @@ Router
         }
         return hashPassword(password)
     })
-    .then( hashedPassword => {
+    .then(hashedPassword => {
         req.body.password = hashedPassword
         return createUser(req.body)
     })
     .then(user => {
-        console.log('user successfully created!', user)
+        console.log("user successfully created!", user)
         return createToken(user)
     })
     .then(token => {
-        console.log('token successfully created!')
+        console.log("token successfully created")
         res
         .status(success.created)
         .json({Message: "Account created successfully!", token})

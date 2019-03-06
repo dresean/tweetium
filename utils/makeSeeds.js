@@ -86,6 +86,11 @@ const fakeMessage = (number) => {
     }
 }
 
+// accepts a function above
+// if only a function passed, multiply 35 times
+// if 2 arguments passed, multiply x times
+// if 3 arguements passed 
+
 const multiply = (cb, ...rest) => {
     let i
     let condition

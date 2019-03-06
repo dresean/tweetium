@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const db = require('../../db')
+const salt = process.env.SALT
 
 const hashPassword = (password) => {
     return new Promise((resolve, reject) => {

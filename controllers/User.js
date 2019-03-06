@@ -2,20 +2,22 @@ const db = require('../db')
 const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_SECRET
 let salt = process.env.SALT
+const moment = require('moment')
 
 //TODO add 
-//audience with regular expression
-// maxAge for days logged in option
-//
+//aud with regular expression matching routes
+//sub
+//iss
 // See https://www.npmjs.com/package/jsonwebtoken
 
 const createToken = (user) => {
     const payload = {
         email: user.email,
         id: user.userId,
+        username: user.username
     }
     const options = {
-        expiresIn: '1d',
+        expiresIn: moment().add(14, 'days').unix(),
         
     }
     return new Promise((resolve, reject) => {
