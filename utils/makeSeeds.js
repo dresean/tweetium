@@ -17,8 +17,8 @@ const fakeUser = (number) => {
     return {
         userId: number,
         name: faker.name.firstName(),
-        username: faker.internet.userName(),
-        email: faker.internet.email(),
+        username: faker.internet.userName().toLowerCase(),
+        email: faker.internet.email().toLowerCase(),
         bio: faker.lorem.sentence(),
         tagline: faker.lorem.words(),
         private: faker.random.boolean(),

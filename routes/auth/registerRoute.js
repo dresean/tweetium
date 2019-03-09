@@ -2,31 +2,32 @@ const express = require('express')
 const Router = express.Router()
 const { success, serverError, clientError, redirection } = require('../../utils/statusCodes')
 const { createUser, hashPassword } = require('../../controllers/auth/registerController')
-const { findEmail, findUsername, createToken } = require('../../controllers/User')
+const { findEmail, findUsername } = require('../../controllers/UserController')
 
 // checks if a user exists in the database by email and username, if not, creates a new user
 
 Router
 .post('/register', (req, res) => {
     let { email, username, password } = req.body
-    if(!email || !username || !password){
+    req.body.email = email.toLowerCase()
+    req.body.username = username.toLowerCase()
+    if(!email || !username || !password) {
         res
         .status(clientError.badRequest)
-        .json({Message: "Please fill all fields to continue"})
+        .json({Message: "Please fill all fields to continue."})
     } 
     return findEmail(email)
-    .then(response => {
-        if(response.length > 0) {
+    .then(emailTaken => {
+        if(emailTaken.length > 0) {
             res.status(clientError.unauthorized)
-            .json({Message: "That email is taken!", response})
+            .json({Message: "That email is taken!"})
         }
         return findUsername(username)
     })
-    .then(response => {
-        if(response.length > 0) {
-            console.log(response.length)
+    .then(usernameTaken => {
+        if(usernameTaken.length > 0) {
             res.status(clientError.unauthorized)
-            .json({Message: "That username is taken!", response})
+            .json({Message: "That username is taken!"})
         }
         return hashPassword(password)
     })
@@ -35,14 +36,10 @@ Router
         return createUser(req.body)
     })
     .then(user => {
-        console.log("user successfully created!", user)
-        return createToken(user)
-    })
-    .then(token => {
-        console.log("token successfully created")
+        console.log("user successfully created! \n", user)
         res
         .status(success.created)
-        .json({Message: "Account created successfully!", token})
+        .json({Message: "Account created successfully!"})
     })
     .catch(err => {
     console.log(err)

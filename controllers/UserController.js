@@ -13,11 +13,11 @@ const moment = require('moment')
 const createToken = (user) => {
     const payload = {
         email: user.email,
-        id: user.userId,
+        userId: user.userId,
         username: user.username
     }
     const options = {
-        expiresIn: moment().add(14, 'days').unix(),
+        expiresIn: moment().add(1, 'days').unix(),
         
     }
     return new Promise((resolve, reject) => {
@@ -41,8 +41,17 @@ const findUsername = (username) => {
     .select('*')
 }
 
+const verifyUser = (userId) => {
+    let query = db('User')
+    return query
+    .select('*')
+    .where('userId', userId)
+    .returning('userId')
+}
+
 module.exports = {
     findEmail,
     findUsername,
-    createToken
+    createToken,
+    verifyUser
 }

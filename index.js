@@ -1,21 +1,26 @@
+// Dependencies
 const express = require('express')
 const cors = require('cors')
 const compression = require('compression')
 const morgan = require('morgan')
-const port = process.env.PORT || 5000
+const path = require('path')
+require('dotenv').config()
+
+// Routes
 const registerRoute = require('./routes/auth/registerRoute')
 const loginRoute = require('./routes/auth/loginRoute')
 const withAuth = require('./middleware/authorization')
 const logoutRoute = require('./routes/auth/logoutRoute')
-// const cookieParser = require('cookie-parser')
-require('dotenv').config()
+const userProfileRoute = require('./routes/profile/userProfileRoute')
+const deleteAccountRoute = require('./routes/auth/deleteAccountRoute')
 
+// variables and modules
+const port = process.env.PORT || 5000
 const Router = express.Router()
 const server = express()
-const path = require('path')
 const db = require('./db')
 
-
+// for auth testing
 const getAllUsers = () => {
     let query = db('User')
     return query
@@ -28,12 +33,16 @@ server.use(express.json())
 // server.use(express.static(path.join(__dirname, 'ui/build')));
 server.use(morgan('dev'))
 server.use(compression())
-// server.use(cookieParser())
+
 
 // Routes
 server.use(loginRoute)
 server.use(registerRoute)
 server.use(logoutRoute)
+server.use(userProfileRoute)
+server.use('/', withAuth, deleteAccountRoute)
+
+
 
 
 server.get('/', (req, res) => {
