@@ -1,6 +1,6 @@
-const { getUser, verifyPassword } = require('../../controllers/auth/loginController');
+const { getUserByEmail, verifyPassword } = require('../../controllers/auth/loginController');
 const { success, clientError, serverError, redirection } = require('../../utils/statusCodes')
-const { findEmail, findUser, createToken } = require('../../controllers/User')
+const { findEmail, findUser, createToken } = require('../../controllers/UserController')
 const express = require('express')
 const Router = express.Router()
 
@@ -8,12 +8,13 @@ const Router = express.Router()
 Router
 .post('/login', (req, res) => {
   let verifiedUser
-  const { email, password } = req.body
-  console.log("verified User", verifiedUser)
+  let { email, password } = req.body
+  email = email.toLowerCase()
+  console.log("verified User \n", verifiedUser)
 
-  return getUser(email)
-  .then( user => {
-    console.log("found user", user)
+  return getUserByEmail(email)
+  .then(user => {
+    console.log("found the user \n", user)
     if(!user) {
       res
       .status(clientError.notFound)

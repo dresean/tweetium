@@ -9,14 +9,14 @@ const verifyPassword = (passwordGuess, user) => {
     })
 }
 
-const getUser = (email) => {
+const getUserByEmail = (email) => {
     let query = db('User')
     return query
-    .first()
     .where('User.email', email)
+    .first()
 }
 
 module.exports = {
-    getUser,
+    getUserByEmail,
     verifyPassword
 }
