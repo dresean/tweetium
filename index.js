@@ -13,7 +13,7 @@ const withAuth = require('./middleware/authorization')
 const logoutRoute = require('./routes/auth/logoutRoute')
 const userProfileRoute = require('./routes/profile/userProfileRoute')
 const deleteAccountRoute = require('./routes/auth/deleteAccountRoute')
-
+const basicInfoRoute = require('./routes/profile/basicInfoRoute')
 // variables and modules
 const port = process.env.PORT || 5000
 const Router = express.Router()
@@ -41,7 +41,7 @@ server.use(registerRoute)
 server.use(logoutRoute)
 server.use(userProfileRoute)
 server.use('/', withAuth, deleteAccountRoute)
-
+server.use('/', withAuth, basicInfoRoute)
 
 
 
