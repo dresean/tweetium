@@ -9,11 +9,13 @@ require('dotenv').config()
 // Routes
 const registerRoute = require('./routes/auth/registerRoute')
 const loginRoute = require('./routes/auth/loginRoute')
-const withAuth = require('./middleware/authorization')
+const withAuth = require('./services/authorization')
 const logoutRoute = require('./routes/auth/logoutRoute')
 const userProfileRoute = require('./routes/profile/userProfileRoute')
 const deleteAccountRoute = require('./routes/auth/deleteAccountRoute')
 const basicInfoRoute = require('./routes/profile/basicInfoRoute')
+const newTweetRoute = require('./routes/tweet/newTweetRoute')
+
 // variables and modules
 const port = process.env.PORT || 5000
 const Router = express.Router()
@@ -29,7 +31,7 @@ const getAllUsers = () => {
 
 // Middleware and tools
 server.use(cors())
-server.use(express.json())
+server.use(express.json({limit: '1mb'}))
 // server.use(express.static(path.join(__dirname, 'ui/build')));
 server.use(morgan('dev'))
 server.use(compression())
@@ -42,7 +44,7 @@ server.use(logoutRoute)
 server.use(userProfileRoute)
 server.use('/', withAuth, deleteAccountRoute)
 server.use('/', withAuth, basicInfoRoute)
-
+server.use('/', withAuth, newTweetRoute)
 
 
 server.get('/', (req, res) => {
