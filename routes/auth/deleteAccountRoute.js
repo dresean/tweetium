@@ -6,7 +6,7 @@ const { deleteUser } = require('../../controllers/auth/deleteAccountController')
 const { getUserByEmail, verifyPassword } = require('../../controllers/auth/loginController')
 const { findEmail } = require('../../controllers/UserController')
 const { clientError, serverError, redirection, success } = require('../../utils/statusCodes')
-const { withAuth } = require('../../middleware/authorization')
+
 
 Router
 .post('/user/:username/settings/delete-account', (req, res) => {

@@ -19,7 +19,7 @@ exports.up = function(knex, Promise) {
             knex.schema.createTable('Tweet', (tbl) => {
                 tbl.increments('tweetId').notNullable().unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
-                tbl.string('body', 280).notNullable()
+                tbl.string('content', 280).notNullable()
                 tbl.binary('image1')
                 tbl.binary('image2')
                 tbl.binary('image3')
@@ -35,7 +35,7 @@ exports.up = function(knex, Promise) {
                 tbl.increments('replyId').notNullable().unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')                
-                tbl.string('body', 280).notNullable()
+                tbl.string('content', 280).notNullable()
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('Retweet', (tbl) => {
@@ -43,7 +43,7 @@ exports.up = function(knex, Promise) {
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('tweet_id').references('Tweet.tweetId').onDelete('CASCADE').onUpdate('CASCADE')                
                 tbl.integer('reply_id').references('Reply.replyId').onDelete('CASCADE').onUpdate('CASCADE')
-                tbl.string('body', 280).notNullable().defaultTo('')
+                tbl.string('content', 280).notNullable().defaultTo('')
                 tbl.binary('image1')
                 tbl.binary('image2')
                 tbl.binary('image3')
@@ -58,7 +58,7 @@ exports.up = function(knex, Promise) {
                 tbl.increments('messageId').unsigned().notNullable().primary()
                 tbl.integer('to_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('from_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
-                tbl.text('body').notNullable()
+                tbl.text('content').notNullable()
                 tbl.binary('image1')
                 tbl.binary('image2')
                 tbl.binary('image3')

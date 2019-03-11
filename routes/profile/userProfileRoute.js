@@ -23,8 +23,7 @@ const { findUsername } = require('../../controllers/UserController')
 
 Router
 .get('/users/:username', (req, res) => {
-    const username = req.params.username
-
+    const username = req.params
     let tweets, followers, following
     const { userId } = req
     const { email } = req
