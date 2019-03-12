@@ -16,7 +16,7 @@ const deleteAccountRoute = require('./routes/auth/deleteAccountRoute')
 const basicInfoRoute = require('./routes/profile/basicInfoRoute')
 const newTweetRoute = require('./routes/tweet/newTweetRoute')
 const deleteTweetRoute = require('./routes/tweet/deleteTweetRoute')
-
+const testRoute = require('./routes/testRoute')
 
 // variables and modules
 const port = process.env.PORT || 5000
@@ -48,6 +48,7 @@ server.use('/', withAuth, deleteAccountRoute)
 server.use('/', withAuth, basicInfoRoute)
 server.use('/', withAuth, newTweetRoute)
 server.use('/', withAuth, deleteTweetRoute)
+server.use('/', withAuth, testRoute)
 
 server.get('/', (req, res) => {
     res.status(200).json({Message: 'server up and running!'})
