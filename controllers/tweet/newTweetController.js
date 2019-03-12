@@ -1,5 +1,12 @@
 const db = require('../../db')
 
+const checkDuplicate = (userId, content) => {
+    let query = db('Tweet')
+    return query
+    .count('tweetId')
+    .where('user_id', userId)
+    .andWhere('content', content)
+}
 const newTweet = (request) => {
     let query = db('Tweet')
     return query
@@ -12,5 +19,6 @@ const newTweet = (request) => {
 }
 
 module.exports = {
-    newTweet
+    newTweet,
+    checkDuplicate
 }
