@@ -15,7 +15,7 @@ Router
         .status(success.ok)
         .json({
         Message: 'Successfully fetched count!',
-        count
+        count: Number(count[0]['count'])
         })
     })
 

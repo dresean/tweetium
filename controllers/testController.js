@@ -7,3 +7,7 @@ const getTweetCount = (userId) => {
     .count('*')
     .where('user_id', userId)
 }
+
+module.exports = {
+    getTweetCount
+}
