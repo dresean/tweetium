@@ -13,8 +13,6 @@ exports.up = function(knex, Promise) {
                 tbl.integer('tweets').unsigned().defaultTo(0)
                 tbl.integer('followers').unsigned().defaultTo(0)
                 tbl.integer('following').unsigned().defaultTo(0)
-                tbl.specificType('followers', 'INT[]')
-                tbl.specificType('following', 'INT[]')
                 tbl.boolean('private').defaultTo(false)
                 tbl.boolean('emailVerified').defaultTo(false)
                 tbl.timestamps(true, true)
@@ -23,7 +21,7 @@ exports.up = function(knex, Promise) {
                 tbl.increments('tweetId').notNullable().unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.string('content', 280).notNullable()
-                tbl.binary('image1')
+                tbl.text('image')
                 tbl.integer('likes').unsigned().defaultTo(0)
                 tbl.integer('retweets').unsigned().defaultTo(0)
                 tbl.integer('replies').unsigned().defaultTo(0)
@@ -40,6 +38,7 @@ exports.up = function(knex, Promise) {
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')                
                 tbl.string('content', 280).notNullable()
+                tbl.text('image')
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('Retweet', (tbl) => {
@@ -48,9 +47,7 @@ exports.up = function(knex, Promise) {
                 tbl.integer('tweet_id').references('Tweet.tweetId').onDelete('CASCADE').onUpdate('CASCADE')                
                 tbl.integer('reply_id').references('Reply.replyId').onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.string('content', 280).notNullable().defaultTo('')
-                tbl.binary('image1')
-                tbl.binary('image2')
-                tbl.binary('image3')
+                tbl.text('image')
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('Follow', (tbl) => {
@@ -63,9 +60,7 @@ exports.up = function(knex, Promise) {
                 tbl.integer('to_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('from_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.text('content').notNullable()
-                tbl.binary('image1')
-                tbl.binary('image2')
-                tbl.binary('image3')
+                tbl.text('image')
                 tbl.timestamps(true, true)
             })
     ])
