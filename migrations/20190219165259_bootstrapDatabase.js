@@ -51,6 +51,7 @@ exports.up = function(knex, Promise) {
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('Follow', (tbl) => {
+                tbl.increments('followId').unsigned().primary()
                 tbl.integer('followed_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('follower_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.timestamps(true, true)
