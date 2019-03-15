@@ -7,7 +7,14 @@ const checkDuplicate = (userId, content) => {
     .where('user_id', userId)
     .andWhere('content', content)
 }
-const newTweet = (request) => {
+
+const incrementTweetCount = userId => {
+    let query = db('User')
+    return query
+    .where('userId', userId)
+    .increment('tweets', 1)
+}
+const newTweet = request => {
     let query = db('Tweet')
     return query
     .insert({
@@ -20,5 +27,6 @@ const newTweet = (request) => {
 
 module.exports = {
     newTweet,
-    checkDuplicate
+    checkDuplicate,
+    incrementTweetCount
 }
