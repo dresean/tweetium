@@ -57,7 +57,7 @@ exports.up = function(knex, Promise) {
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('Message', (tbl) => {
-                tbl.increments('messageId').unsigned().notNullable().primary()
+                tbl.increments('messageId').unsigned().primary()
                 tbl.integer('to_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('from_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.text('content').notNullable()
