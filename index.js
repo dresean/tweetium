@@ -4,6 +4,7 @@ const cors = require('cors')
 const compression = require('compression')
 const morgan = require('morgan')
 const path = require('path')
+const cookiesMiddleware = require('universal-cookie-express')
 require('dotenv').config()
 
 // Routes
@@ -37,7 +38,7 @@ server.use(express.json({limit: '1mb'}))
 // server.use(express.static(path.join(__dirname, 'ui/build')));
 server.use(morgan('dev'))
 server.use(compression())
-
+server.use(cookiesMiddleware())
 
 // Routes
 server.use(loginRoute)

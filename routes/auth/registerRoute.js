@@ -8,7 +8,7 @@ const { findEmail, findUsername } = require('../../controllers/UserController')
 
 Router
 .post('/register', (req, res) => {
-    let { email, username, password } = req.body
+    let { email, username, password, name } = req.body
     req.body.email = email.toLowerCase()
     req.body.username = username.toLowerCase()
     if(!email || !username || !password) {
