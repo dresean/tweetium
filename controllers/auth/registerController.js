@@ -10,7 +10,6 @@ const hashPassword = (password) => {
     })
 }
 
-//todo delete returning value
 const createUser = (request) => {
     let query = db('User')
     return query
