@@ -20,7 +20,7 @@ const fakeUser = (number) => {
         username: faker.internet.userName().toLowerCase(),
         email: faker.internet.email().toLowerCase(),
         bio: faker.lorem.sentence(),
-        tagline: faker.lorem.words(),
+        website: 'https://google.com',
         private: faker.random.boolean(),
         emailVerified: faker.random.boolean(),
         password: faker.internet.password()
@@ -31,6 +31,9 @@ const fakeTweet = (number) => {
     return {
         tweetId: number,
         user_id: number,
+        likes: Math.floor(Math.random() * 100),
+        retweets: Math.floor(Math.random() * 100),
+        replies: Math.floor(Math.random() * 100),
         body: makeString()
     }
 }

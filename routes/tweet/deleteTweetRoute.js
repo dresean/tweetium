@@ -20,6 +20,13 @@ Router
     return deleteTweet(id, currentUserId)
     .then(rowsDeleted => {
         console.log('Number of rows deleted: ', rowsDeleted)
+        if(rowsDeleted === 0) {
+            res
+            .status(clientError.notFound)
+            .json({
+                Message: 'We couldn\'t delete that tweet. That tweet no longer exists.'
+            })
+        }
         res
         .status(success.ok)
         .json({

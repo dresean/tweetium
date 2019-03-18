@@ -1,7 +1,7 @@
 const express = require('express')
 const Router = express.Router()
 const { success, clientError, serverError, redirection } = require('../../utils/statusCodes')
-const { newTweet } = require('../../controllers/tweet/newTweetController')
+const { newTweet, checkDuplicate } = require('../../controllers/tweet/newTweetController')
 const { upload } = require('../../services/awsUpload')
 
 const multiplePictureUpload = upload.array('image', 3)
@@ -30,7 +30,18 @@ Router
         })
     }
 
-    return newTweet(req)
+    return checkDuplicate(userId, content)
+    .then(duplicateCount => {
+        console.log('duplicate tweet count', duplicateCount)
+        if(duplicateCount[0]['count'] > 0) {
+            res
+            .status(clientError.badRequest)
+            .json({
+                Message: 'You already said that. Please say something new!'
+            })
+        }
+        return newTweet(req)
+    })
     // return singlePictureUpload(req, res, (err, pic) => {
     //     if(err) {
     //         console.log('There was an error uploading the picture', err, 'detail: \n \n', err.message, '\n\n')
@@ -58,12 +69,11 @@ Router
         })
     })
     .catch(err => {
-        console.log('There was an error \n', err)
+        console.log('There was an error \n', err, '\n', err.message)
         res
         .status(serverError.internalServerError)
         .json({
             Message: 'There was a problem posting your tweet, please try again later.',
-            detail: err.message
         })
     })
 })
