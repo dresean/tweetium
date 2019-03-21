@@ -15,12 +15,14 @@ Router
         res
         .status(clientError.badRequest)
         .json({Message: "Please fill all fields to continue."})
+        return
     } 
     return findEmail(email)
     .then(emailTaken => {
         if(emailTaken.length > 0) {
             res.status(clientError.unauthorized)
             .json({Message: "That email is taken!"})
+            return
         }
         return findUsername(username)
     })
@@ -28,6 +30,7 @@ Router
         if(usernameTaken.length > 0) {
             res.status(clientError.unauthorized)
             .json({Message: "That username is taken!"})
+            return
         }
         return hashPassword(password)
     })
@@ -40,11 +43,13 @@ Router
         res
         .status(success.created)
         .json({Message: "Account created successfully!"})
+        return
     })
     .catch(err => {
     console.log(err)
     res.status(serverError.internalServerError)
     .json({Message: "There as a problem processing your request, please try again later.", err})
+    return
     })
 })
 
