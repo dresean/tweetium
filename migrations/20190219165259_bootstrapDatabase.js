@@ -36,7 +36,7 @@ exports.up = function(knex, Promise) {
             knex.schema.createTable('Reply', (tbl) => {
                 tbl.increments('replyId').notNullable().unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
-                tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')                
+                tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.string('content', 280).notNullable()
                 tbl.text('image')
                 tbl.timestamps(true, true)
@@ -44,7 +44,7 @@ exports.up = function(knex, Promise) {
             knex.schema.createTable('Retweet', (tbl) => {
                 tbl.increments('retweetId').notNullable().unsigned().primary()
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
-                tbl.integer('tweet_id').references('Tweet.tweetId').onDelete('CASCADE').onUpdate('CASCADE')                
+                tbl.integer('tweet_id').references('Tweet.tweetId').onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('reply_id').references('Reply.replyId').onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.string('content', 280).notNullable().defaultTo('')
                 tbl.text('image')
