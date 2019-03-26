@@ -14,6 +14,8 @@ let str = faker.lorem.paragraph()
     // generate fake data, each function simply returns an object 
 
 const fakeUser = (number) => {
+    let passwordString = faker.internet.password()
+    console.log(`password for user ${number}: \n\n\n ${passwordString} \n`)
     return {
         userId: number,
         name: faker.name.firstName(),
@@ -34,7 +36,7 @@ const fakeTweet = (number) => {
         likes: Math.floor(Math.random() * 100),
         retweets: Math.floor(Math.random() * 100),
         replies: Math.floor(Math.random() * 100),
-        body: makeString()
+        content: makeString()
     }
 }
 
@@ -51,7 +53,7 @@ const fakeReply = (number) => {
         replyId: number,
         user_id: number,
         tweet_id: number,
-        body: makeString()
+        content: makeString()
     }
 }
 
@@ -60,7 +62,7 @@ const fakeReplyRetweet = (number) => {
         retweetId: number,
         user_id: number,
         reply_id: number,
-        body: makeString()
+        content: makeString()
     }
 }
 
@@ -69,7 +71,7 @@ const fakeRetweet = (number) => {
         retweetId: number,
         user_id: number,
         tweet_id: number,
-        body: makeString()
+        content: makeString()
     }
 }
 
@@ -85,7 +87,7 @@ const fakeMessage = (number) => {
         messageId: number,
         to_id: number,
         from_id: number + 1,
-        body: faker.lorem.paragraph()
+        content: faker.lorem.paragraph()
     }
 }
 
