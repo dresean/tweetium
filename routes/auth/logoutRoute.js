@@ -4,7 +4,6 @@ const { clientError, serverError, redirection, success } = require('../../utils/
 const { checkAuth, removeAuth } = require('../../controllers/auth/logoutController')
 Router
 .get('/logout', (req, res) => {
-    
         if(checkAuth(req) === false) {
             res
             .status(clientError.notFound)
