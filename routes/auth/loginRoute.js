@@ -1,60 +1,38 @@
-const { getUserByEmail, verifyPassword } = require('../../controllers/auth/loginController');
-const { success, clientError, serverError, redirection } = require('../../utils/statusCodes')
-const { findEmail, findUser, createToken } = require('../../controllers/UserController')
 const express = require('express')
 const Router = express.Router()
+const { clientError, serverError, success } = require('../../utils/statusCodes')
+const { getUserByEmail, verifyPassword } = require('../../controllers/auth/loginController')
+const { createToken } = require('../../controllers/UserController')
 
-
-Router
-.post('/login', (req, res) => {
-  let verifiedUser
+Router.post('/login', (req, res) => {
   let { email, password } = req.body
-  email = email.toLowerCase()
-  console.log("verified User \n", verifiedUser)
+  let verifiedUser
 
-  return getUserByEmail(email)
-  .then(user => {
-    console.log("found the user \n", user)
-    if(!user) {
-      return res
-      .status(clientError.notFound)
-      .json({
-        Message: `No user with the email ${email} found, please try again or signup.`
-      })
+  req.body.email = email.toLowerCase()
+  email = req.body.email
+
+  if(!email || !password) {
+    return res.status(clientError.badRequest).json({Message: 'Please fill out all fields to continue.'})
     }
 
-    verifiedUser = user
-    console.log("verified User", verifiedUser)
-
-    return verifyPassword(password, user)
-  })
-  .then(response => {
-    console.log("Correct password?", response)
-    if(!response) {
-      return res
-      .status(clientError.unauthorized)
-      .json({Message: "password incorrect, please try again"})
-    }
-    console.log("creating token")
-
-    return createToken(verifiedUser)
-  })
-  .then(token => {
-    console.log("token created!", token)
-    res
-    .status(success.ok)
-    .cookie('token', token)
-    .json({
-      Message: `Successfully logged in! welcome back ${verifiedUser.username}!`,
-      token
+    return getUserByEmail(email)
+    .then(user => {
+      verifiedUser = user[0]
+      console.log('verified user? ', verifiedUser)
+      return verifyPassword(req.body.password, verifiedUser)
     })
-  })
-  .catch(err => {
-    console.log(err)
-    return res
-    .status(clientError.notFound)
-    .json(err)
-  })
+    .then(passwordCorrect => {
+      console.log('Password correct? ', passwordCorrect)
+      return createToken(verifiedUser)
+    })
+    .then(token => {
+      console.log('token',token)
+      return res.status(success.ok).json({Message: 'Successfully logged in!', token})
+    })
+    .catch(err => {
+      // console.log(err)
+      return res.status(serverError.internalServerError).json({Message: 'There was a problem logging you, please check the email and/or password and try again.'})
+    })
 })
 
 module.exports = Router

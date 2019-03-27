@@ -12,8 +12,8 @@ const verifyPassword = (passwordGuess, user) => {
 const getUserByEmail = (email) => {
     let query = db('User')
     return query
+    .select('*')
     .where('User.email', email)
-    .first()
 }
 
 module.exports = {
