@@ -4,13 +4,10 @@ const { clientError, serverError, redirection, success } = require('../../utils/
 const { checkAuth, removeAuth } = require('../../controllers/auth/logoutController')
 Router
 .get('/logout', (req, res) => {
-    
         if(checkAuth(req) === false) {
             res
             .status(clientError.notFound)
-            .json({
-                Message: "You are already logged out!"
-            })
+            .json({Message: "You are already logged out!"})
         }
         removeAuth(req)
         console.log("auth removed! the auth header: ", req.headers.authorization)
