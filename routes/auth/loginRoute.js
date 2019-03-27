@@ -16,22 +16,22 @@ Router
   .then(user => {
     console.log("found the user \n", user)
     if(!user) {
-      res
+      return res
       .status(clientError.notFound)
       .json({
         Message: `No user with the email ${email} found, please try again or signup.`
       })
     }
-    
+
     verifiedUser = user
     console.log("verified User", verifiedUser)
 
     return verifyPassword(password, user)
   })
-  .then( response => {
+  .then(response => {
     console.log("Correct password?", response)
     if(!response) {
-      res
+      return res
       .status(clientError.unauthorized)
       .json({Message: "password incorrect, please try again"})
     }
@@ -39,7 +39,7 @@ Router
 
     return createToken(verifiedUser)
   })
-  .then( token => {
+  .then(token => {
     console.log("token created!", token)
     res
     .status(success.ok)
@@ -51,7 +51,8 @@ Router
   })
   .catch(err => {
     console.log(err)
-    res.status(clientError.notFound)
+    return res
+    .status(clientError.notFound)
     .json(err)
   })
 })

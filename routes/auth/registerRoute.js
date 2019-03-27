@@ -1,6 +1,7 @@
 const express = require('express')
 const Router = express.Router()
 const { success, serverError, clientError, redirection } = require('../../utils/statusCodes')
+const { hashPassword, createUser } = require('../../controllers/auth/registerController')
 
 // checks if a user exists in the database by email and username, if not, creates a new user
 Router.post('/register', (req, res) => {
@@ -13,8 +14,9 @@ Router.post('/register', (req, res) => {
 
     //check for empty input
     if(!username || !email || !password) {
-        res.status(clientError.badRequest)
-        return res.json({Message: 'Please fill the entire form to continue'})
+        return res
+        .status(clientError.badRequest)
+        .json({Message: 'Please fill the entire form to continue'})
     }
 
     return hashPassword(password)
@@ -34,26 +36,30 @@ Router.post('/register', (req, res) => {
 
 // handle database errors thrown on bad request and erroneous error
 const errorTypes = (err, res) => {
-    console.log(err)
         if (err.constraint) {
         switch(err.constraint) {
             case 'user_username_unique':
             res.status(clientError.badRequest)
             res.json({Message: 'That username is taken!'})
+            console.log('That username is taken!')
             break
             case 'user_email_unique':
             res.status(clientError.badRequest)
             res.json({Message: 'That email is taken!'})
+            console.log('That email is taken!')
             break
             default:
             res.status(serverError.internalServerError)
             res.json({Message: 'There was a problem processing your request, please try again'})
+            console.log('There was an unknown error with the database', err)
             break
         }
     }
     else {
-        res.status(serverError.internalServerError)
-        return res.json({Message: 'There was a problem processing your request, please try again'})
+        console.log('There was an error! \n', err)
+        return res
+        .status(serverError.internalServerError)
+        .json({Message: 'There was a problem processing your request, please try again'})
     }
 }
 module.exports = Router

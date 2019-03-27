@@ -7,9 +7,7 @@ Router
         if(checkAuth(req) === false) {
             res
             .status(clientError.notFound)
-            .json({
-                Message: "You are already logged out!"
-            })
+            .json({Message: "You are already logged out!"})
         }
         removeAuth(req)
         console.log("auth removed! the auth header: ", req.headers.authorization)
