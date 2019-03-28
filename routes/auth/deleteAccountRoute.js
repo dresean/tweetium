@@ -11,54 +11,57 @@ const { clientError, serverError, redirection, success } = require('../../utils/
 Router
 .post('/user/:username/settings/delete-account', (req, res) => {
     const currentUserEmail = req.email
-    const username = req.params.username
+    const username = req.username
     const userId = req.userId
-    let { email, password } = req.body
-    email = req.body.email.toLowerCase()
 
-    console.log(' in delete route \n \n \n \n req.email', req.email)
-    console.log('req.userId', req.userId)
-    console.log('req.username', req.username)
-    
+    let { email, password } = req.body
+    req.body.email = email.toLowerCase()
+    email = req.body.email
+
+
+    console.log('in delete route:\n\n\n req.email ', req.email)
+    console.log('req.userId ', req.userId)
+    console.log('req.username ', req.username)
+
+    if(!email || !password) {
+        return res.status(clientError.badRequest).json({Message: 'Please fill all fields to continue.'})
+    }
+
+    if(!currentUserEmail) {
+        return res.status(clientError.forbidden).json({Message: 'You must be logged in to do that.'})
+    }
+    if(currentUserEmail !== email) {
+        return res.status(clientError.unauthorized).json({Message: 'Please enter the correct email.'})
+    }
     return getUserByEmail(email)
     .then(user => {
+        console.log('made it past getUserEmail')
         console.log("the user \n\n\n\n", user)
-        if(!user || email !== currentUserEmail) {
-            res
-            .status(clientError.notFound)
-            .json({
-                Message: 'That email is incorrect, please try again'
-            })
-        }
-        return verifyPassword(password, user)
+        return verifyPassword(password, user[0])
     })
     .then(passwordMatch => {
+        console.log('passwords match? ', passwordMatch)
         if(!passwordMatch) {
-            res
-            .status(clientError.unauthorized)
-            .json({
-                Message: 'Incorrect password, please try again'
-            })
-        }
+            return false
+        } else {
         return deleteUser(userId)
+        }
     })
     .then(response => {
-        console.log(response)
+        console.log('the response \n', response)
+        if(!response) {
+            return res.status(clientError.unauthorized).json({Message: 'Please enter the correct password.'})
+        } else if(response === 1) {
         removeAuth(req)
-        res
-        .status(success.resetContent)
-        .json({
-            Message: 'Account successfully deleted! See you later!'
-        })
+        return res.status(success.resetContent).json({Message: 'Account successfully deleted! See you later!'})
+        }
     })
     .catch(err => {
         console.log('There was an error deleting the account', err)
-        res
-        .status(serverError.internalServerError)
-        .json({
-            Message: 'There was an error deleting the account, please try again later.'
-        })
+        console.log(err.message)
+        return res.status(serverError.internalServerError).json({Message: 'There was an error deleting the account, please check the email and/or password and try again.'})
     })
 })
+
 
 module.exports = Router

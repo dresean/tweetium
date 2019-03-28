@@ -26,7 +26,7 @@ Router.post('/login', (req, res) => {
       return createToken(verifiedUser)
     })
     .then(token => {
-      console.log('token',token)
+      console.log('token', token)
       return res.status(success.ok).json({Message: 'Successfully logged in!', token})
     })
     .catch(err => {
