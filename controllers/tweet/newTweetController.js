@@ -11,6 +11,7 @@ const checkDuplicate = (userId, content) => {
 const incrementTweetCount = userId => {
     let query = db('User')
     return query
+    .update()
     .where('userId', userId)
     .increment('tweets', 1)
 }
