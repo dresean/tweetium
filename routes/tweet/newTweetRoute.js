@@ -1,7 +1,7 @@
 const express = require('express')
 const Router = express.Router()
 const { success, clientError, serverError, redirection } = require('../../utils/statusCodes')
-const { newTweet, checkDuplicate } = require('../../controllers/tweet/newTweetController')
+const { newTweet, checkDuplicate, incrementTweetCount } = require('../../controllers/tweet/newTweetController')
 const { upload } = require('../../services/awsUpload')
 
 // const multiplePictureUpload = upload.array('image', 3)
@@ -12,6 +12,7 @@ Router
     const { content } = req.body
     const userId = req.userId
     const username = req.params.username
+    let duplicates
 //     let pictureUrl
 //     // todo add  && !image1 below to the if statement
     if(!content) {
@@ -25,35 +26,34 @@ Router
             Message: 'You are not authorized to do this.'
         })
     }
-
+    console.log('Check duplicates')
     checkDuplicate(userId, content)
     .then(duplicateCount => {
-        console.log('duplicate tweet count', duplicateCount)
-        if(duplicateCount[0]['count'] > 0) {
-            return res.status(clientError.badRequest).json({
-                Message: 'You already said that. Please say something new!'
+        duplicates = Number(duplicateCount[0]['count'])
+        if (duplicates > 0) {
+            console.log('duplicate tweet detected, please try again')
+            return res.status(clientError.badRequest).json({Message: 'You already said that. Please say something new!'})
+        } else {
+            return incrementTweetCount(userId)
+            .then(response => {
+            console.log('no duplicates found')
+            console.log('increment tweet count')
+            return newTweet(req)
+            })
+            .then(response => {
+            console.log('tweet posted')
+            console.log(response.content)
+            return res.status(success.created).json({Message: 'Tweet successfully posted!', response})
+            })
+            .catch(err => {
+            console.log('There was an error \n', err, '\n', err.message)
+            return res.status(serverError.internalServerError).json({Message: 'There was a problem posting your tweet, please try again later.'})
             })
         }
     })
     .catch(err => {
         console.log(err)
-    })
-
-    incrementTweetCount(userId)
-    .then()
-
-    return newTweet(req)
-    .then(response => {
-        return res.status(success.created).json({
-            Message: 'Tweet successfully posted!',
-            response
-        })
-    })
-    .catch(err => {
-        console.log('There was an error \n', err, '\n', err.message)
-        return res.status(serverError.internalServerError).json({
-            Message: 'There was a problem posting your tweet, please try again later.',
-        })
+        return res.status(serverError.internalServerError).json({Message: 'There was an error processing your request, please try again later.'})
     })
 })
 
