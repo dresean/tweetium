@@ -18,11 +18,6 @@ Router
     req.body.email = email.toLowerCase()
     email = req.body.email
 
-
-    console.log('in delete route:\n\n\n req.email ', req.email)
-    console.log('req.userId ', req.userId)
-    console.log('req.username ', req.username)
-
     if(!email || !password) {
         return res.status(clientError.badRequest).json({Message: 'Please fill all fields to continue.'})
     }
@@ -35,12 +30,10 @@ Router
     }
     return getUserByEmail(email)
     .then(user => {
-        console.log('made it past getUserEmail')
-        console.log("the user \n\n\n\n", user)
         return verifyPassword(password, user[0])
     })
     .then(passwordMatch => {
-        console.log('passwords match? ', passwordMatch)
+
         if(!passwordMatch) {
             return false
         } else {
@@ -59,6 +52,9 @@ Router
     .catch(err => {
         console.log('There was an error deleting the account', err)
         console.log(err.message)
+        if(err.message === 'Cannot read property \'password\' of undefined') {
+            return res.status(clientError.unauthorized).json({Message: 'Please log in to do this!'})
+        }
         return res.status(serverError.internalServerError).json({Message: 'There was an error deleting the account, please check the email and/or password and try again.'})
     })
 })
