@@ -4,11 +4,26 @@ const db = require('../../db')
 const deleteTweet = (tweetId, userId) => {
     let query = db('Tweet')
     return query
+    .del()
     .where('tweetId', tweetId)
     .andWhere('user_id', userId)
-    .del()
+}
+
+const checkIfTweetExists = (tweetId) => {
+    let query = db('Tweet')
+    return query
+    .select('*')
+    .where('tweetId', tweetId)
+}
+const decrementTweetCount = (userId) => {
+    let query = db('User')
+    return query
+    .where('userId', userId)
+    .decrement('tweets', 1)
 }
 
 module.exports = {
-    deleteTweet
+    deleteTweet,
+    decrementTweetCount,
+    checkIfTweetExists
 }

@@ -8,6 +8,10 @@ const { findEmail } = require('../../controllers/UserController')
 const { clientError, serverError, redirection, success } = require('../../utils/statusCodes')
 
 
+// checks the to see if current user is logged in
+// confirms email and password
+//
+
 Router
 .post('/user/:username/settings/delete-account', (req, res) => {
     const currentUserEmail = req.email
@@ -59,5 +63,8 @@ Router
     })
 })
 
+// TODO decrement followers' followers count
+/*
 
+*/
 module.exports = Router

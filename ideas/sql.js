@@ -117,7 +117,36 @@ SQL
 (update like count on tweet, 
     update likes on user tweet with likedBy avi, name, username, bio)
 
-SELECT *
+SQL:update like count on tweet
+
+UPDATE tweet 
+SET (likes = like + 1)
+WHERE Tweet.id = tweetId;
+
+CREATE TABLE Like (
+    likeId INTEGER PRIMARY KEY,
+    tweet_id INTEGER FOREIGN KEY REFERENCES Tweet(tweetId)
+    user_id INTEGER FOREIGN KEY REFERENCES User(userId)
+    created_at DATETIME
+);
+
+
+SQL: update likes on user tweet with likedBy avi, name, username, bio
+WITH user_info AS (
+    SELECT *
+    FROM User
+)
+SELECT user_info.userName
+FROM Tweet
+LEFT JOIN Like
+ON Tweet.tweetId = Like.tweet_id
+ WHERE Like.user_id = UserId
+ AND user_info.userId = UserId
+ GROUP BY 1
+ ORDER BY Like.created_at 
+
+
+
 FROM tweet
 WHERE tweet.tweetId = tweetId
 
