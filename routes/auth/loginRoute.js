@@ -18,19 +18,16 @@ Router.post('/login', (req, res) => {
     return getUserByEmail(email)
     .then(user => {
       verifiedUser = user[0]
-      console.log('verified user? ', verifiedUser)
       return verifyPassword(req.body.password, verifiedUser)
     })
     .then(passwordCorrect => {
-      console.log('Password correct? ', passwordCorrect)
       return createToken(verifiedUser)
     })
     .then(token => {
-      console.log('token', token)
       return res.status(success.ok).json({Message: 'Successfully logged in!', token})
     })
     .catch(err => {
-      // console.log(err)
+      console.log(err)
       return res.status(serverError.internalServerError).json({Message: 'There was a problem logging you, please check the email and/or password and try again.'})
     })
 })

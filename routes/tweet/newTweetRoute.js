@@ -26,23 +26,17 @@ Router
             Message: 'You are not authorized to do this.'
         })
     }
-    console.log('Check duplicates')
     checkDuplicate(userId, content)
     .then(duplicateCount => {
         duplicates = Number(duplicateCount[0]['count'])
         if (duplicates > 0) {
-            console.log('duplicate tweet detected, please try again')
             return res.status(clientError.badRequest).json({Message: 'You already said that. Please say something new!'})
         } else {
             return incrementTweetCount(userId)
             .then(response => {
-            console.log('no duplicates found')
-            console.log('increment tweet count')
             return newTweet(req)
             })
             .then(response => {
-            console.log('tweet posted')
-            console.log(response.content)
             return res.status(success.created).json({Message: 'Tweet successfully posted!', response})
             })
             .catch(err => {
