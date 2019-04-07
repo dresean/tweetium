@@ -18,7 +18,7 @@ Router
     checkIfTweetExists(tweetId)
     .then(response => {
         if(response.length < 1) {
-            return res.status(clientError.badRequest).json({Message: 'That tweet is already deleted.'})
+            return res.status(clientError.badRequest).json({Message: 'That tweet doesn\'t exist.'})
         } else {
             return deleteTweet(tweetId, currentUserId)
                 .then(response => {

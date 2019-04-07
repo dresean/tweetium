@@ -19,14 +19,15 @@ const unfollow = (followerId, followedId) => {
 
 const decrementFollowers = (followedId) => {
     let query = db('User')
-    .where('User.id', followedId)
+    return query
+    .where('User.userId', followedId)
     .decrement('followers', 1)
 }
 
 const decrementFollowing = (followerId) => {
     let query = db('User')
     return query
-    .where('User.id', followerId)
+    .where('User.userId', followerId)
     .decrement('following', 1)
 }
 

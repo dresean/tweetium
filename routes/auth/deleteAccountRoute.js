@@ -8,9 +8,7 @@ const { findEmail } = require('../../controllers/UserController')
 const { clientError, serverError, redirection, success } = require('../../utils/statusCodes')
 
 
-// checks the to see if current user is logged in
-// confirms email and password
-//
+
 
 Router
 .post('/user/:username/settings/delete-account', (req, res) => {
@@ -37,7 +35,6 @@ Router
         return verifyPassword(password, user[0])
     })
     .then(passwordMatch => {
-
         if(!passwordMatch) {
             return false
         } else {
@@ -45,7 +42,6 @@ Router
         }
     })
     .then(response => {
-        console.log('the response \n', response)
         if(!response) {
             return res.status(clientError.unauthorized).json({Message: 'Please enter the correct password.'})
         } else if(response === 1) {
@@ -54,8 +50,6 @@ Router
         }
     })
     .catch(err => {
-        console.log('There was an error deleting the account', err)
-        console.log(err.message)
         if(err.message === 'Cannot read property \'password\' of undefined') {
             return res.status(clientError.unauthorized).json({Message: 'Please log in to do this!'})
         }
