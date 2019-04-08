@@ -1,6 +1,6 @@
 # Tweetium
 ### basically, but not legally, twitter.
-## deployed live on [heroku](https//tweetium.herokuapp.com)
+## deployed live on [heroku](https://tweetium.herokuapp.com/)
 
 # Required Software
 - node 11 or greater
