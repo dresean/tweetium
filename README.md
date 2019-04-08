@@ -1,4 +1,4 @@
-#Tweetium
+# Tweetium
 ### basically, but not legally, twitter.
 ## deployed live on [heroku](https//tweetium.herokuapp.com)
 
@@ -11,7 +11,7 @@
 
 
 
-#Getting Started
+# Getting Started
 ### clone the repository down to your machine
 ### `git clone https://github.com/dresean/tweetium.git`
 ### the preferred package manager is yarn for this repository
