@@ -16,9 +16,9 @@
 ### `git clone https://github.com/dresean/tweetium.git`
 ### the preferred package manager is yarn for this repository
 ### `yarn global add nodemon`
-###`cd` into the freshly cloned directory at its root
+### `cd` into the freshly cloned directory at its root
 ### `git branch` to check if you're on the dev branch, if not, use `git checkout dev` to switch branches
-###`yarn install` or `yarn i`
+### `yarn install` or `yarn i`
 ### open a new terminal window, `cd` into the root tweetium directory and run `nodemon index.js`
 ### get back to your previous terminal
 ### create a `.env` file at the root directory
