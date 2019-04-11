@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
                 tbl.string('name', 50).defaultTo('')
                 tbl.string('username', 25).notNullable().unique()
                 tbl.text('password').notNullable()
-                tbl.binary('uploadedAvatar').defaultTo('')
-                tbl.text('defaultAvatar').defaultTo('https://res.cloudinary.com/culterre-llc/image/upload/v1550785903/default_ffmgtg.jpg')
+                tbl.text('avatar').defaultTo('https://res.cloudinary.com/culterre-llc/image/upload/v1550785903/default_ffmgtg.jpg')
+                tbl.text('background').defaultTo('https://res.cloudinary.com/culterre-llc/image/upload/v1554777806/defaultTwitterBackground_ejr0sq.png')
                 tbl.string('email', 50).unique().comment('might have permission from oauth2 or not, so not required')
                 tbl.string('bio', 160).defaultTo('')
                 tbl.text('website').defaultTo('')
@@ -22,6 +22,9 @@ exports.up = function(knex, Promise) {
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.string('content', 280).notNullable()
                 tbl.text('image')
+                tbl.text('avatar')
+                tbl.string('username', 25)
+                tbl.string('name', 50)
                 tbl.integer('likes').unsigned().defaultTo(0)
                 tbl.integer('retweets').unsigned().defaultTo(0)
                 tbl.integer('replies').unsigned().defaultTo(0)
@@ -39,6 +42,9 @@ exports.up = function(knex, Promise) {
                 tbl.integer('tweet_id').references('Tweet.tweetId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.string('content', 280).notNullable()
                 tbl.text('image')
+                tbl.text('avatar')
+                tbl.string('username', 25)
+                tbl.string('name', 50)
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('Retweet', (tbl) => {
@@ -48,6 +54,12 @@ exports.up = function(knex, Promise) {
                 tbl.integer('reply_id').references('Reply.replyId').onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.string('content', 280).notNullable().defaultTo('')
                 tbl.text('image')
+                tbl.text('avatar')
+                tbl.string('username', 25)
+                tbl.string('name', 50)
+                tbl.text('rtAvatar')
+                tbl.string('rtUsername', 25)
+                tbl.string('rtName', 50)
                 tbl.timestamps(true, true)
             }),
             knex.schema.createTable('Follow', (tbl) => {

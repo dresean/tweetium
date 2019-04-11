@@ -23,10 +23,10 @@
 ### get back to your previous terminal
 ### create a `.env` file at the root directory
 ### fill in the environment variables in the `.env` file that suits your postgresql database needs
-### please keep the `SALT` environment variable as is for fast hashing and retrival 
+### please keep the `SALT` environment variable as is for fast hashing and retrival
 ```
 DEV_DATABASE_USER=[your username]
-DEV_DATABASE_NAME= [your database name]
+DEV_DATABASE_NAME=[your database name]
 DEV_DATABASE_PASSWORD=[your database password]
 SALT=11
 JWT_SECRET=[your json web token secret]
