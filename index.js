@@ -20,6 +20,7 @@ const deleteTweetRoute = require('./routes/tweet/deleteTweetRoute')
 const testRoute = require('./routes/testRoute')
 const followRoute = require('./routes/follow/newFollowRoute')
 const unfollowRoute = require('./routes/follow/unfollowRoute')
+const picTweetRoute = require('./routes/tweet/newPicTweetRoute')
 
 // variables and modules
 const port = process.env.PORT || 5000
@@ -54,6 +55,8 @@ server.use('/', withAuth, deleteTweetRoute)
 server.use('/', withAuth, testRoute)
 server.use('/', withAuth, followRoute)
 server.use('/', withAuth, unfollowRoute)
+server.use('/', withAuth, picTweetRoute)
+
 
 server.get('/', (req, res) => {
     res.status(200).json({Message: 'server up and running!'})
