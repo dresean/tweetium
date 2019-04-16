@@ -13,7 +13,10 @@ const postTweetWithImage = (content, userId, imageUrl, req) => {
     .insert([
         {'user_id': userId}, 
         {'image': imageUrl}, 
-        {'content': req.body.content}
+        {'content': req.body.content},
+        {'avatar': req.avatar},
+        {'name': req.name},
+        {'username': req.username}
         ], 
         ['tweetId', 'content', 'image']
     )
@@ -22,5 +25,3 @@ const postTweetWithImage = (content, userId, imageUrl, req) => {
 
 module.exports = { incrementTweetCount, postTweetWithImage }
 
-
-// TODO set up jwt with user avatar available in req object

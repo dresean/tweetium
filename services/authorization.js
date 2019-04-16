@@ -27,6 +27,8 @@ const withAuth = (req, res, next) => {
         console.log("req.userId", req.userId)
         console.log("req.email", req.email)
         console.log("req.username", req.username)
+        console.log("req.avatar", req.avatar)
+        console.log("req.name", req.name)
         next()
     })
 }
