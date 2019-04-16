@@ -16,7 +16,8 @@ const createToken = (user) => {
         userId: user.userId,
         username: user.username,
         avatar: user.avatar,
-        name: user.name
+        name: user.name,
+        background: user.background
     }
     const options = {
         expiresIn: moment().add(1, 'days').unix(),
