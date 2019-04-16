@@ -14,7 +14,10 @@ const createToken = (user) => {
     const payload = {
         email: user.email,
         userId: user.userId,
-        username: user.username
+        username: user.username,
+        avatar: user.avatar,
+        name: user.name,
+        background: user.background
     }
     const options = {
         expiresIn: moment().add(1, 'days').unix(),

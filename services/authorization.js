@@ -24,9 +24,15 @@ const withAuth = (req, res, next) => {
         req.userId = decoded.userId
         req.email = decoded.email
         req.username = decoded.username
+        req.name = decoded.name
+        req.avatar = decoded.avatar
+        req.background = decoded.background
         console.log("req.userId", req.userId)
         console.log("req.email", req.email)
         console.log("req.username", req.username)
+        console.log("req.avatar", req.avatar)
+        console.log("req.name", req.name)
+        console.log("req.background", req.background)
         next()
     })
 }

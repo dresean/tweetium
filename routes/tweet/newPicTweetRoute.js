@@ -27,3 +27,21 @@ Router.post('/user/:username/tweet-upload', (req, res) => {
 })
 
 module.exports = Router
+//code above works flawlessly, however, nothing is saved to the database
+
+// TODO add code below and insert the upload as 'image' in the Tweet Table.
+
+// return incrementTweetCount(userId)
+//         .then(() => {
+//         return postTweetWithImage(content, userId, imageUrl, req)
+//         })
+//         .then(response => {
+//         console.log('Tweet successfully posted!')
+//         return res.status(success.created).json({Message: 'Tweet successfully posted!', response})
+//     })
+//     .catch(err => {
+//         console.log('There was an error. \n\n\n', err)
+//         return res.status(serverError.internalServerError).json({Message: 'There was a problem posting your tweet, please try again later.'})
+//     })
+module.exports = Router
+
