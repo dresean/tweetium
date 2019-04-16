@@ -28,7 +28,7 @@ Router.post('/user/:username/tweet-upload', (req, res) => {
 
         return incrementTweetCount(userId)
             .then(() => {
-            return postTweetWithImage(content, userId, theImageFile, req)
+            return postTweetWithImage(content, userId, theImageFile.location, req)
             })
             .then(response => {
             console.log('Tweet successfully posted!')
@@ -43,9 +43,7 @@ Router.post('/user/:username/tweet-upload', (req, res) => {
 })
 
 module.exports = Router
-//code above works flawlessly, however, nothing is saved to the database
 
-// TODO add code below and insert the upload as 'image' in the Tweet Table.
 
 
 module.exports = Router
