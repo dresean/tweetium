@@ -7,12 +7,12 @@ const incrementTweetCount = (userId) => {
     .where('userId', userId)
 }
 
-const postTweetWithImage = (content, userId, imageUrl, req) => {
+const postTweetWithImage = (content, userId, imageFile, req) => {
     let query = db('Tweet')
     return query
     .insert([
         {'user_id': userId}, 
-        {'image': imageUrl}, 
+        {'image': imageFile['location']}, 
         {'content': req.body.content},
         {'avatar': req.avatar},
         {'name': req.name},
