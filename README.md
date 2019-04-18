@@ -11,6 +11,7 @@
 - create, alter, and delete an account
 - verify email addresses
 - share tweets
+- add & search for specific hashtagged tweets
 - view a collective timeline of tweets from followed users
 - view individual tweet timelines from followed users
 - and more
