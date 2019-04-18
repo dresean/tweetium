@@ -14,7 +14,9 @@ Router.post('/login', (req, res) => {
   if(!email || !password) {
     return res.status(clientError.badRequest).json({Message: 'Please fill out all fields to continue.'})
     }
-
+  if(req.headers.authorization) {
+    return res.status(clientError.badRequest).json({Message: 'You are already logged in!'})
+  }
     return getUserByEmail(email)
     .then(user => {
       verifiedUser = user[0]
