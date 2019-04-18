@@ -75,6 +75,19 @@ exports.up = function(knex, Promise) {
                 tbl.text('content').notNullable()
                 tbl.text('image')
                 tbl.timestamps(true, true)
+            }),
+            knex.schema.createTable('HashtagName', (tbl) => {
+                tbl.increments('hashtagNameId').unsigned().primary().notNullable()
+                tbl.string('hashtagName', 250).notNullable().unique()
+            }),
+            knex.schema.createTable('HashtagTweet', (tbl) => {
+                tbl.increments('hashtagTweetId').unsigned().primary()
+                tbl.integer('hashtagName_id').references('HashtagName.hashtagNameId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.integer('tweet_id').references('Tweet.tweetId').onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.integer('reply_id').references('Reply.replyId').onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.integer('retweet_id').references('Retweet.retweetId').onDelete('CASCADE').onUpdate('CASCADE')
+                tbl.string('hashtagName', 250).notNullable()
             })
     ])
     .then(tables => {
@@ -87,6 +100,8 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
     return Promise.all([
+        knex.schema.dropTableIfExists('HashtagName'),
+        knex.schema.dropTableIfExists('HashtagTweet'),
         knex.schema.dropTableIfExists('Message'),
         knex.schema.dropTableIfExists('Follow'),
         knex.schema.dropTableIfExists('Retweet'),
