@@ -14,14 +14,17 @@ const incrementTweetCount = userId => {
     .where('userId', userId)
     .increment('tweets', 1)
 }
-const newTweet = request => {
+const newTweet = (req, name, avatar, username) => {
     let query = db('Tweet')
     return query
     .insert({
         'content': request.body.content,
         'user_id': request.userId,
+        'name': name,
+        'avatar': avatar,
+        'username': username,
         },
-        ['user_id', 'tweetId', 'content']
+        ['user_id', 'tweetId', 'content', 'name', 'avatar']
         )
 }
 

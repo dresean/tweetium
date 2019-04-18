@@ -1,6 +1,6 @@
 const faker = require('faker');
 
-// limits string lenght output from faker
+// limits string length output from faker
 
 const makeString = () => {
 const maxLength = 280
@@ -30,13 +30,18 @@ const fakeUser = (number) => {
 }
 
 const fakeTweet = (number) => {
+    const randomNumber = () => Math.floor(Math.random() * 100)
+    const text = randomNumber() > 50 ? faker.image.imageUrl() : ''
     return {
         tweetId: number,
         user_id: number,
-        likes: Math.floor(Math.random() * 100),
-        retweets: Math.floor(Math.random() * 100),
-        replies: Math.floor(Math.random() * 100),
-        content: makeString()
+        likes: randomNumber(),
+        retweets: randomNumber(),
+        replies: randomNumber(),
+        content: makeString(),
+        name: faker.name.firstName(),
+        username: faker.internet.userName(),
+        image: text
     }
 }
 
