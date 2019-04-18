@@ -2,19 +2,18 @@ const express = require('express')
 const Router = express.Router()
 const { success, clientError, serverError, redirection } = require('../../utils/statusCodes')
 const { newTweet, checkDuplicate, incrementTweetCount } = require('../../controllers/tweet/newTweetController')
-const { upload } = require('../../services/awsUpload')
 
-// const multiplePictureUpload = upload.array('image', 3)
-const singlePictureUpload = upload.single('image')
 
 Router
 .post('/user/:username/tweet', (req, res) => {
     const { content } = req.body
     const userId = req.userId
     const username = req.params.username
+    const name = req.name
+    const avatar = req.avatar
+
     let duplicates
-//     let pictureUrl
-//     // todo add  && !image1 below to the if statement
+
     if(!content) {
         return res.status(clientError.badRequest).json({
             Message: 'Please enter text or an image to post a tweet.'
@@ -34,7 +33,7 @@ Router
         } else {
             return incrementTweetCount(userId)
             .then(response => {
-            return newTweet(req)
+            return newTweet(req, name, avatar, username)
             })
             .then(response => {
             return res.status(success.created).json({Message: 'Tweet successfully posted!', response})
@@ -52,22 +51,3 @@ Router
 })
 
 module.exports = Router
-
-//     // return singlePictureUpload(req, res, (err, pic) => {
-//     //     if(err) {
-//     //         console.log('There was an error uploading the picture', err, 'detail: \n \n', err.message, '\n\n')
-//     //         res
-//     //         .status(clientError.badRequest)
-//     //         .json({
-//     //             Message: 'There was a problem uploading your picture, please make sure it is < 1MB and try again'
-//     //         })
-//     //     }
-//     //     res
-//     //     .status(success.created)
-//     //     .json({
-//     //         Message: 'Tweet posted successfully!',
-//     //         imageUrl: req.file.location
-//     //     })
-//     //     pictureUrl = req.file.location
-//     //     return newTweet(req, pictureUrl)
-//     // })

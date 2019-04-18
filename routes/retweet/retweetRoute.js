@@ -1,4 +1,4 @@
-const express = require('express')
+ const express = require('express')
 const Router = express.Router()
 const { serverError, clientError, success } = require('../../utils/statuscodes')
 const { getTweetInfo } = require('../../controllers/retweet/retweetController')
