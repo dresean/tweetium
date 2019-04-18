@@ -26,6 +26,10 @@ Router.post('/login', (req, res) => {
       .then(token => {
         return res.status(success.ok).json({Message: 'Successfully logged in!', token})
       })
+      .catch(err => {
+        console.log(err)
+        return res.status(serverError.internalServerError).json({Message: 'There was a problem logging you in, please try again'})
+      })
       } else return res.status(clientError.notFound).json({Message: 'Password incorrect, please try again'})
     })
     
