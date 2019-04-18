@@ -8,25 +8,24 @@ Router
     const username = req.params.username
     const tweetId = req.params.id
     const currentUsername = req.username
-    const currentUserId = req.userId
+    const userId = req.userId
     let tweetExists
 
     if(username !== currentUsername) {
         return res.status(clientError.badRequest).json({ Message: 'You are either not signed in, or unauthorized to complete this request, please try again'})
     }
 
-    checkIfTweetExists(tweetId)
+    checkIfTweetExists(tweetId, userId)
     .then(response => {
+        console.log('check if tweet exists response', response)
         if(response.length < 1) {
             return res.status(clientError.badRequest).json({Message: 'That tweet doesn\'t exist.'})
         } else {
-            return deleteTweet(tweetId, currentUserId)
+            return deleteTweet(tweetId, userId)
                 .then(response => {
-                console.log(response)
-                return decrementTweetCount(currentUserId)
+                return decrementTweetCount(userId)
                 })
                 .then(response => {
-                    console.log(response)
                     return res.status(success.ok).json({Message: 'Tweet deleted successfully!'})
                 })
                 .catch(err => {

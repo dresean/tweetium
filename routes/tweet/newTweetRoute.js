@@ -36,7 +36,7 @@ Router
             return newTweet(req, name, avatar, username)
             })
             .then(response => {
-            return res.status(success.created).json({Message: 'Tweet successfully posted!', response})
+            return res.status(success.created).json({Message: 'Tweet successfully posted!', Tweet: response})
             })
             .catch(err => {
             console.log('There was an error \n', err, '\n', err.message)
