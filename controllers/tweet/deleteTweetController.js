@@ -9,11 +9,12 @@ const deleteTweet = (tweetId, userId) => {
     .andWhere('user_id', userId)
 }
 
-const checkIfTweetExists = (tweetId) => {
+const checkIfTweetExists = (tweetId, userId) => {
     let query = db('Tweet')
     return query
     .select('*')
     .where('tweetId', tweetId)
+    .andWhere('user_id', userId)
 }
 const decrementTweetCount = (userId) => {
     let query = db('User')

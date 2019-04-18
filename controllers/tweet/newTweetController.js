@@ -14,7 +14,7 @@ const incrementTweetCount = userId => {
     .where('userId', userId)
     .increment('tweets', 1)
 }
-const newTweet = (req, name, avatar, username) => {
+const newTweet = (request, name, avatar, username) => {
     let query = db('Tweet')
     return query
     .insert({
@@ -23,9 +23,8 @@ const newTweet = (req, name, avatar, username) => {
         'name': name,
         'avatar': avatar,
         'username': username,
-        },
-        ['user_id', 'tweetId', 'content', 'name', 'avatar']
-        )
+        })
+        .returning(['user_id', 'tweetId', 'content', 'name', 'avatar'])
 }
 
 module.exports = {
