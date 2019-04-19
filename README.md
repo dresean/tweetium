@@ -1,13 +1,14 @@
-#Tweetium
+# Tweetium
 ### basically, but not legally, twitter.
 ## deployed live on [heroku](https//tweetium.herokuapp.com)
 
-#This api will be able to:
+# This api will be able to:
 - post, reply to, and retweet tweets
 - upload an avatar, and background picture
 - upload a picture to tweet with text
 - like tweets, replies, and retweets
 - direct message other users
+- create and search hashtagged tweets
 - create, alter, and delete an account
 - verify email addresses
 - share tweets
