@@ -1,35 +1,49 @@
 const db = require('../../db')
 
-// TODO :
-/*
-if retweeted tweet contains media, only fetch the username, name,
-media as thumbnail and the content
 
-if tweet contains no media, fetch avatar, username, replying to username
-date created, like count, comment count, retweetcount and dm option
-*/
-/*
-if retweeting without comment, get entire user tweet
-get user: avatar, name, username, replying to (optional)
-get tweet:
-*/
-const getTweetInfo = (tweetId) => {
-    let query = db('Tweet')
-    return query
-    .as('t')
-    .select('u.username', 'u.name', 'u.avatar', 't.content', 't.likes', 't.retweets', 't.replies', 't.created_at')
-    .leftJoin('User', 't.user_id', 'u.userId').as('u')
-    .where('t.tweetId', tweetId)
+const getTweet = (tweetId) => {
+  let query = db('Tweet')
+  return query
+    .select('*')
+    .where('tweetId', tweetId)
 }
 
+const getReply = (replyId) => {
+    let query = db('Reply')
+    return query
+        .select('*')
+        .where('replyId', replyId)
+}
 
-module.exports = { getTweetInfo }
-/*
-SELECT u.username, u.name, u.avatar,
-t.content, t.likes, t.retweets, t.replies, t.created_at
-FROM Tweet as 't'
-LEFT JOIN User AS 'u'
-ON t.user_id = u.userId
-WHERE t.tweetId = tweetId
+const getRetweet = (retweetId) => {
+    let query = db('Retweet')
+    return query
+    .select('*')
+    .where('retweetId', retweetId)
+}
 
-*/
+const postRetweet = (req, tweet) => {
+    let query = db('Retweet')
+    return query
+    .insert({
+        'user_id': req.userId, 
+        'tweetId': tweetId, 
+        'reply_id': replyId, 
+        'retweet_id': retweetId,
+        'content': req.body, 
+        'avatar': avatar, 
+        'username': username, 
+        'name': name, 
+        'rtAvatar': tweet.avatar, 
+        'rtUsername': tweet.username, 
+        'rtName': tweet.name, 
+        'rtContent': tweet.content
+    })
+}
+
+module.exports = { 
+    getTweet, 
+    getReply, 
+    getRetweet, 
+    postRetweet
+}

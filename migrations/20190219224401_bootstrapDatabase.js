@@ -49,6 +49,7 @@ exports.up = function(knex, Promise) {
             }),
             knex.schema.createTable('Retweet', (tbl) => {
                 tbl.increments('retweetId').notNullable().unsigned().primary()
+                tbl.integer('retweet_id').references('Retweet.retweetId').onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('user_id').references('User.userId').notNullable().onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('tweet_id').references('Tweet.tweetId').onDelete('CASCADE').onUpdate('CASCADE')
                 tbl.integer('reply_id').references('Reply.replyId').onDelete('CASCADE').onUpdate('CASCADE')
@@ -57,8 +58,10 @@ exports.up = function(knex, Promise) {
                 tbl.text('avatar')
                 tbl.string('username', 25)
                 tbl.string('name', 50)
+                tbl.string('rtContent', 250).notNullable()
                 tbl.text('rtAvatar')
                 tbl.string('rtUsername', 25)
+                tbl.string('rtCreatedAt', 100)
                 tbl.string('rtName', 50)
                 tbl.timestamps(true, true)
             }),
@@ -100,8 +103,8 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
     return Promise.all([
-        knex.schema.dropTableIfExists('HashtagName'),
         knex.schema.dropTableIfExists('HashtagTweet'),
+        knex.schema.dropTableIfExists('HashtagName'),
         knex.schema.dropTableIfExists('Message'),
         knex.schema.dropTableIfExists('Follow'),
         knex.schema.dropTableIfExists('Retweet'),

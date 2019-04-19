@@ -8,6 +8,7 @@
 - upload a picture to tweet with text
 - like tweets, replies, and retweets
 - direct message other users
+- create and search hashtagged tweets
 - create, alter, and delete an account
 - verify email addresses
 - share tweets
