@@ -1,5 +1,25 @@
 const db = require('../../db')
 
+const checkIfReply = (tweetId) => {
+    let query = db('Reply')
+    return query
+        .count('*')
+        .where('replyId', tweetId)
+}
+
+const checkIfRetweet = (tweetId) => {
+    let query = db('Reply')
+    return query
+        .count('*')
+        .where('retweetId', tweetId)
+}
+
+const checkIfTweet = (tweetId) => {
+    let query = db('Reply')
+    return query
+        .count('*')
+        .where('tweetId', tweetId)
+}
 
 const getTweet = (tweetId) => {
   let query = db('Tweet')
