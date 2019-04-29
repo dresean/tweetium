@@ -1,4 +1,4 @@
-// Update with your config settings.
+// use pg as postgres client, initiates database
 
 const pg = require('pg')
 pg.defaults.ssl = true

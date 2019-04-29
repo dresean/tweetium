@@ -7,6 +7,8 @@ const { incrementTweetCount, postTweetWithImage } = require('../../controllers/t
 const singleImage = upload.single('image')
 let imageFile
 
+// uploads a picture tweet via AWS S3 and multer
+
 Router.post('/user/:username/tweet-upload', (req, res) => {
     const username = req.params.username
     const userId = req.userId

@@ -3,6 +3,8 @@ const Router = express.Router()
 const { success, clientError, serverError, redirection } = require('../../utils/statusCodes')
 const { newTweet, checkDuplicate, incrementTweetCount } = require('../../controllers/tweet/newTweetController')
 
+// check auth
+// post tweet if not duplicate
 
 Router
 .post('/user/:username/tweet', (req, res) => {

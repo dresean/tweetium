@@ -28,13 +28,6 @@ const Router = express.Router()
 const server = express()
 const db = require('./db')
 
-// for auth testing
-const getAllUsers = () => {
-    let query = db('User')
-    return query
-    .select('*')
-}
-
 // Middleware and tools
 server.use(cors())
 server.use(express.json({limit: '1mb'}))
@@ -58,9 +51,17 @@ server.use('/', withAuth, unfollowRoute)
 server.use('/', withAuth, picTweetRoute)
 
 
+// used by query below
 server.get('/', (req, res) => {
     res.status(200).json({Message: 'server up and running!'})
 })
+
+// for auth testing
+const getAllUsers = () => {
+    let query = db('User')
+    return query
+    .select('*')
+}
 
 server.get('/users', withAuth, (req, res) => {
     return getAllUsers()

@@ -1,4 +1,4 @@
-
+// simple status code objects
 module.exports = {
     success: {
         ok: 200,

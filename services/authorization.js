@@ -3,6 +3,10 @@ const { clientError, serverError } = require('../utils/statusCodes')
 const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_SECRET
 
+// middleware for route authorization,
+// checks the request headers for auth
+// if no auth, send message to client
+// if auth, next function
 const withAuth = (req, res, next) => {
     const token = req.headers.authorization || false
     if(!token) {
@@ -27,12 +31,6 @@ const withAuth = (req, res, next) => {
         req.name = decoded.name
         req.avatar = decoded.avatar
         req.background = decoded.background
-        console.log("req.userId", req.userId)
-        console.log("req.email", req.email)
-        console.log("req.username", req.username)
-        console.log("req.avatar", req.avatar)
-        console.log("req.name", req.name)
-        console.log("req.background", req.background)
         next()
     })
 }

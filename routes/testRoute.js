@@ -1,3 +1,6 @@
+// a route set up for testing integration
+
+
 const express = require('express')
 const Router = express.Router()
 const { serverError, clientError, success, redirection } = require('../utils/statusCodes')

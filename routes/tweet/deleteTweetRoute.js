@@ -11,6 +11,9 @@ Router
     const userId = req.userId
     let tweetExists
 
+    // checks if username matches the one in the token
+    // if so, check if tweet exists
+    // if so delete the tweet, decrement tweet count
     if(username !== currentUsername) {
         return res.status(clientError.badRequest).json({ Message: 'You are either not signed in, or unauthorized to complete this request, please try again'})
     }

@@ -11,7 +11,8 @@ let str = faker.lorem.paragraph()
     return str
 }
 
-    // generate fake data, each function simply returns an object 
+// generate fake data, each function 
+// simply returns an object 
 
 const fakeUser = (number) => {
     let passwordString = faker.internet.password()
@@ -97,9 +98,9 @@ const fakeMessage = (number) => {
 }
 
 // accepts a function above
-// if only a function passed, multiply 35 times
-// if 2 arguments passed, multiply x times
-// if 3 arguements passed 
+// if only a function passed, multiply object 35 times
+// if 2 arguments passed, multiply object x times
+// if 3 arguements passed set start and end to object multiplication
 
 const multiply = (cb, ...rest) => {
     let i
